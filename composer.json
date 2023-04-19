@@ -2,7 +2,8 @@
     "name": "guanfangge/rcu-hotels",
     "autoload": {
         "psr-4": {
-            "Guanfangge\\RcuHotels\\": "src/"
+            "Guanfangge\\RcuHotels\\": "src/",
+            "HelloWorld\\" : "src/"
         }
     },
     "authors": [
@@ -11,5 +12,7 @@
             "email": "527164653@qq.com"
         }
     ],
-    "require": {}
+    "require": {
+        "php" : ">=7.4"
+    }
 }
