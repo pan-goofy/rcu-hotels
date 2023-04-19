@@ -1,0 +1,15 @@
+{
+    "name": "guanfangge/rcu-hotels",
+    "autoload": {
+        "psr-4": {
+            "Guanfangge\\RcuHotels\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "panzheqi",
+            "email": "527164653@qq.com"
+        }
+    ],
+    "require": {}
+}
