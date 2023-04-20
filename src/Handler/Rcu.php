@@ -10,10 +10,10 @@ class  Rcu{
 
     public function getDevice(\Guanfangge\RcuHotels\Contracts\Rcu $class,array $data){
         $this->class = $class;
-        return $this->class->getDevice(...array_values($data));
+        return $this->class->getDevice(...$data);
     }
     public function setDevice(\Guanfangge\RcuHotels\Contracts\Rcu $class,array $data){
         $this->class = $class;
-        return $this->class->setDevice(...array_values($data));
+        return $this->class->setDevice(...$data);
     }
 }

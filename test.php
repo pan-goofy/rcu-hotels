@@ -21,9 +21,9 @@ $config  =  [
 $think = new  RcuThinke($config);
 #$think = new RcuLianDong();
 $data = [
-    "roomId"=>"8403",
-    "hotelId"=>"33",
-    "deviceType"=>""
+    "8403",
+    "33",
+    ""
 ];
 $response = $rcu->getDevice($think,$data);
 var_dump($response);
