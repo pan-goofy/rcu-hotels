@@ -1,7 +1,18 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: guanfangge
- * Date: 4/19/23
- * Time: 5:53 PM
- */
+
+declare(strict_types=1);
+
+namespace Guanfangge\RcuHotels\Contracts;
+
+interface Rcu
+{
+    /**
+     * 获取设备
+     */
+    public function getDevice($roomId,$hotelCode,$deviceType);
+    /**
+     * 修改设备
+     */
+    public function setDevice($roomId,$hotelCode,$deviceId,$deviceState,$action,$deviceAttr,$attrValue);
+
+}

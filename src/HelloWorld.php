@@ -6,7 +6,7 @@
  * Time: 上午11:16
  */
 
-namespace HelloWorld;
+namespace Guanfangge\RcuHotels;
 
 class HelloWorld
 {

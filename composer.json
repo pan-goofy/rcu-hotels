@@ -2,8 +2,7 @@
     "name": "guanfangge/rcu-hotels",
     "autoload": {
         "psr-4": {
-            "Guanfangge\\RcuHotels\\": "src/",
-            "HelloWorld\\" : "src/"
+            "Guanfangge\\RcuHotels\\": "src/"
         }
     },
     "authors": [
@@ -13,6 +12,8 @@
         }
     ],
     "require": {
-        "php" : ">=7.4"
+        "php" : ">=7.4",
+        "guzzlehttp/guzzle": "^7.5",
+        "tightenco/collect": "^8.83"
     }
 }
