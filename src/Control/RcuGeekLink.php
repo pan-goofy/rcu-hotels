@@ -1,7 +1,20 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: guanfangge
- * Date: 4/21/23
- * Time: 9:16 AM
- */
+
+namespace Guanfangge\RcuHotels\Control;
+
+
+use Guanfangge\RcuHotels\Contracts\Rcu;
+use GuzzleHttp\Client;
+
+class RcuGeekLink implements Rcu
+{
+    public function getDevice($roomId="",$hotelId="",$deviceType="")
+    {
+       return  [];
+    }
+
+    public function setDevice($roomId,$hotelId,$deviceId="",$deviceState="",$action="",$deviceAttr,$attrValue)
+    {
+       return [];
+    }
+}

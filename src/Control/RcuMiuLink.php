@@ -5,7 +5,7 @@ namespace Guanfangge\RcuHotels\Control;
 use Guanfangge\RcuHotels\Contracts\Rcu;
 use GuzzleHttp\Client;
 
-class RcuLianDong implements Rcu
+class RcuMiuLink implements Rcu
 {
     public function getDevice($roomId,$hotelId,$deviceType)
     {
