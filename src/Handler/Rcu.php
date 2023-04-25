@@ -17,10 +17,10 @@ class  Rcu
     public function __construct($type, $config = "")
     {
         $classs = collect([
-            "" => new RcuThinke($config),
-            "thinker" => new RcuThinke($config),
-            "miulink" => new RcuMiuLink(),
-            "geeklink" => new RcuGeekLink()
+            "" => new RcuThinke($config['defaults']),
+            "thinker" => new RcuThinke($config['defaults']),
+            "miulink" => new RcuMiuLink($config['miulink']),
+            "geeklink" => new RcuGeekLink($config['geeklink'])
         ]);
         $this->class = $classs->get($type);
     }
