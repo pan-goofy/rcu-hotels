@@ -11,8 +11,8 @@ class RcuThinke implements Rcu
     public $thinker;
     public $url;
     public function __construct($config){
-        $this->thinker = $config['defaults']['thinker'];
-        $this->url = $config['defaults']['url'];
+        $this->thinker = $config['thinker'];
+        $this->url = $config['url'];
     }
 
     public function getDevice($roomId="",$hotelId="",$deviceType="")
