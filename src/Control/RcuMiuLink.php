@@ -11,11 +11,11 @@ class RcuMiuLink implements Rcu
     {
         $aParams =[
             "data"=> "sendmsg",
-            "eroom"=> "8000",
+            "eroom"=> $roomId,
             "efloor"=> "0",
             "esta"=>"-1",
-            "hotelnum"=> "0542",
-            "edev"=>"所有设备",
+            "hotelnum"=> $hotelId,
+            "edev"=> $this->getType($deviceType),
             "devname"=>""
         ];
         $httpClient = new Client([
@@ -27,12 +27,19 @@ class RcuMiuLink implements Rcu
         $sHttpRes = $httpClient->post("https://www.miulink.com/smarthotel/Equips", ['body' => http_build_query($aParams)])->getBody()->getContents();
         $response = json_decode($sHttpRes,true);
         $collect = collect($response);
+        $collect = $collect->where("devicetype_keynum",0);
         $response  = $collect->map(function ($item){
             $item['name'] = $item['title'];
-            $item['id'] = $item['number'];
+            $item['id'] = hexdec($item['number']);
             $item['type'] = $item['devicetype_name'] =="灯光"? "LIGHT":$item['devicetype_name'];
+            $item['type'] = $item['devicetype_name'] =="换气扇"? "LIGHT":$item['type'];
+            $item['type'] =  strpos($item['title'],"窗帘")===0 ? "CURTAIN" :$item['type'];
             $item['STATE_ON'] = "STATE_ON";
-            $item['state'] = $item['state']==="关闭" ? 0:100;
+            if($item['type']=="CURTAIN"){
+                $item['state'] = $item['state']==="关闭" ? 0:2;
+            }else{
+                $item['state'] = $item['state']==="关闭" ? 0:100;
+            }
             return $item;
         });
 
@@ -51,15 +58,33 @@ class RcuMiuLink implements Rcu
         $ff= "";
         for ($i=0;$i<66;$i++){
             if($i== intval($deviceId)){
-                $ff .= $deviceState=== "STATE_ON" ? "01":"00";
+                $ff .=  $this->getState($deviceState);
             }else{
                 $ff .= "FF";
             }
         }
-        $parmas = "msg=B105428000FFFF00A701AFFFFFFFFFFEBEEA48${ff}B1B1AAAA0D0A";
-        $aParams = ["hotelnum"=>"0542","data"=>$parmas];
+        $parmas = "msg=B1${hotelId}${roomId}FFFF00A701AFFFFFFFFFFEBEEA48${ff}B1B1AAAA0D0A";
+        $aParams = ["hotelnum"=>$hotelId,"data"=>$parmas];
         $sHttpRes = $httpClient->post("https://www.miulink.com/smarthotel/Control", ['body' => http_build_query($aParams)])->getBody()->getContents();
         return json_decode($sHttpRes);
     }
 
+    public function getType($type)
+    {
+        $types = collect([
+            ""=>"所有设备",
+            "LIGHT"=>"灯光",
+        ]);
+        return $types->get($type);
+    }
+
+    public function getState($state)
+    {
+        $states = collect([
+            "STATE_ON"=>"01",
+            "STATE_OFF"=>"00",
+            "STATE_STOP"=>"04",
+        ]);
+        return $states->get($state);
+    }
 }
