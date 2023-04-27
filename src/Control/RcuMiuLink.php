@@ -27,7 +27,9 @@ class RcuMiuLink implements Rcu
         $sHttpRes = $httpClient->post("https://www.miulink.com/smarthotel/Equips", ['body' => http_build_query($aParams)])->getBody()->getContents();
         $response = json_decode($sHttpRes,true);
         $collect = collect($response);
-        $collect = $collect->where("devicetype_keynum",0);
+        $collect = $collect->filter(function ($item){
+            return $item['devicetype_keynum']==0;
+        })->values();
         $response  = $collect->map(function ($item){
             $item['name'] = $item['title'];
             $item['id'] = hexdec($item['number']);
@@ -37,12 +39,12 @@ class RcuMiuLink implements Rcu
             $item['STATE_ON'] = "STATE_ON";
             if($item['type']=="CURTAIN"){
                 $item['state'] = $item['state']==="关闭" ? 0:2;
-            }else{
+            }
+            if($item['type']=="LIGHT"){
                 $item['state'] = $item['state']==="关闭" ? 0:100;
             }
             return $item;
         });
-
         $data['Data'] = $response;
         return $data;
     }
@@ -73,7 +75,7 @@ class RcuMiuLink implements Rcu
     {
         $types = collect([
             ""=>"所有设备",
-            "LIGHT"=>"灯光",
+            "LIGHT"=>"灯光"
         ]);
         return $types->get($type);
     }
