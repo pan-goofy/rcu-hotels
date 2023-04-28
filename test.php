@@ -37,5 +37,6 @@ $think = new RcuMiuLink();
 //
 //var_dump($re);
 
-$response = $rcu->getDevice($data);
-var_dump($response);
+//$response = $rcu->getDevice($data);
+//var_dump($response);
+
