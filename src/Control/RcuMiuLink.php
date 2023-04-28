@@ -157,7 +157,7 @@ class RcuMiuLink implements Rcu
             }
         }
         $ff= "";
-        for ($i=0;$i<66;$i++){
+        for ($i=0;$i<65;$i++){
             for ($j=0;$j<count($newDevice);$j++){
                 if(intval($newDevice[$j]["id"]) == $i){
                     $state = $newDevice[$j]["id"] == "关灯" ? "00":"01";
