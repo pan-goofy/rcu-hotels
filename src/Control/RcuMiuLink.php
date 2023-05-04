@@ -136,11 +136,9 @@ class RcuMiuLink implements Rcu
         $data = "FLRS,${hotelId},${roomId},${deviceId},${status}";
         $res = $httpClient->post("https://www.miulink.com/smarthotelserver", ['body' => $data])->getBody()->getContents();
         //关闭打开模式对应设备
-
         $mode = $this->getMode($roomId,$hotelId);
         $device = collect($mode)->where("name",$deviceId)->first();
         $devices  = collect($device['devices'])->values();
-
         if(empty($devices)){
             return $res;
         }
@@ -157,7 +155,7 @@ class RcuMiuLink implements Rcu
             }
         }
         $ff= "";
-        for ($i=0;$i<65;$i++){
+        for ($i=0;$i<66;$i++){
             for ($j=0;$j<count($newDevice);$j++){
                 if(intval($newDevice[$j]["id"]) == $i){
                     $state = $newDevice[$j]["id"] == "关灯" ? "00":"01";
@@ -190,5 +188,11 @@ class RcuMiuLink implements Rcu
             "STATE_STOP"=>"04",
         ]);
         return $states->get($state);
+    }
+
+    public function updateMode($roomId,$hotelId,$mode,$status="STATE_ON")
+    {
+        $deviceId = $mode ==1 ? "所有灯":"关闭所有灯";
+        self::setMode($roomId,$hotelId,$deviceId,$status);
     }
 }

@@ -35,4 +35,8 @@ class  Rcu
     {
         return $this->class->setDevice(...$data);
     }
+    public function updateMode(array $data)
+    {
+        return $this->class->updateMode(...$data);
+    }
 }

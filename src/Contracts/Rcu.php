@@ -15,4 +15,9 @@ interface Rcu
      */
     public function setDevice($roomId,$hotelCode,$deviceId,$deviceState,$action,$deviceAttr,$attrValue);
 
+    /**
+     * 修改模式
+     */
+    public function updateMode($roomId,$hotelId,$mode,$status);
+
 }
