@@ -116,4 +116,11 @@ class RcuGeekLink implements Rcu
         $cachePool->save($demoString);
     }
 
+    /**
+     * 修改模式
+     */
+    public function updateMode($roomId, $hotelId, $mode, $status)
+    {
+        // TODO: Implement updateMode() method.
+    }
 }

@@ -58,7 +58,7 @@ class RcuThinke implements Rcu
         $sHttpRes = $httpClient->post($this->url, ['json' => $aParams])->getBody()->getContents();
         return json_decode($sHttpRes);
     }
-    public function updateMode($roomId,$hotelId,$mode=1){
+    public function updateMode($roomId,$hotelId,$mode=1,$status){
         //模式名称
         $sence = self::getStatus($hotelId,$roomId);
         if($sence){
