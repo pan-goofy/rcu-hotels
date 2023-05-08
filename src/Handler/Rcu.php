@@ -18,7 +18,7 @@ class  Rcu
     {
         $classs = collect([
             "" => new RcuThinke($config['defaults']),
-            "thinker" => new RcuThinke($config['defaults']),
+            "thinke" => new RcuThinke($config['defaults']),
             "miulink" => new RcuMiuLink($config['miulink']),
             "geeklink" => new RcuGeekLink($config['geeklink'])
         ]);
