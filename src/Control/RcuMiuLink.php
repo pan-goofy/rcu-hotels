@@ -138,10 +138,10 @@ class RcuMiuLink implements Rcu
         //关闭打开模式对应设备
         $mode = $this->getMode($roomId,$hotelId);
         $device = collect($mode)->where("name",$deviceId)->first();
-        $devices  = collect($device['devices'])->values();
-        if(empty($devices)){
+        if(empty($device['devices'])){
             return $res;
         }
+        $devices  = collect($device['devices'])->values();
         $newDevice = array();
         foreach ($devices as $key => $value) {
             // 如果当前元素的键为偶数，则创建一个新的关联数组
@@ -157,12 +157,17 @@ class RcuMiuLink implements Rcu
         $ff= "";
         for ($i=0;$i<66;$i++){
             for ($j=0;$j<count($newDevice);$j++){
-                if(intval($newDevice[$j]["id"]) == $i){
-                    $state = $newDevice[$j]["id"] == "关灯" ? "00":"01";
+                if(hexdec($newDevice[$j]["id"]) == $i){
+                    $state = $newDevice[$j]["state"] == "关灯" ? "00":"01";
                     $ff  .= $state;
+                    $status =1;
+                    break;
                 }
             }
-            $ff .= "FF";
+            if($status!==1){
+                $ff .= "FF";
+            }
+            $status =0;
         }
         $parmas = "msg=B1${hotelId}${roomId}FFFF00A701AFFFFFFFFFFEBEEA48${ff}B1B1AAAA0D0A";
         $aParams = ["hotelnum"=>$hotelId,"data"=>$parmas];
