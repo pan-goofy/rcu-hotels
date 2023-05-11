@@ -31,7 +31,8 @@ class RcuMiuLink implements Rcu
         $response = json_decode($sHttpRes,true);
         $collect = collect($response);
         $collect = $collect->filter(function ($item){
-            return $item['devicetype_keynum']==0 && strpos($item['title'],"继电器") ==false;
+            return $item['devicetype_keynum']==0 && strpos($item['title'],"继电器") ==false
+                && strpos($item['title'],"联") ==false;
         })->values();
         $response  = $collect->map(function ($item){
             $item['name'] = $item['title'];
