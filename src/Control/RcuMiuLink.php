@@ -39,7 +39,7 @@ class RcuMiuLink implements Rcu
             $item['id'] = hexdec($item['number']);
             $item['type'] = $item['devicetype_name'] =="灯光"? "LIGHT":$item['devicetype_name'];
             $item['type'] = $item['devicetype_name'] =="换气扇"? "LIGHT":$item['type'];
-            $item['type'] =  strpos($item['title'],"窗帘") !==false ? "CURTAIN" :$item['type'];
+            $item['type'] = $item['devicetype_root_name']=="窗帘" ? "CURTAIN" :$item['type'];
             $item['STATE_ON'] = "STATE_ON";
             if($item['type']=="CURTAIN"){
                 $item['state'] = $item['state']==="关闭" ? 0:2;
