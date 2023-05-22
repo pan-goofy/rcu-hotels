@@ -20,11 +20,14 @@ $config  =  [
 $rcu = new Rcu("miulink",$config);
 #$think = new  RcuThinke($config);
 $data = [
-    "1401",
-    "05B4",
+    "8188",
+    "0542",
     ""
 ];
 $think = new RcuMiuLink();
+$res = $think->updateMode(8188,"0542",0);
+
+var_dump($res);
 
 //$config = [
 //    "username"=>"18551725735",

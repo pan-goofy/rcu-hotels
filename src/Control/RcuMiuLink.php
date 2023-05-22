@@ -80,6 +80,24 @@ class RcuMiuLink implements Rcu
         return json_decode($sHttpRes);
     }
 
+    public function insertCard($roomId,$hotelId,$type=1){
+        //1 无卡取电,2插卡取电
+        $status = $type==1?"D901":"D900";
+        $httpClient = new Client([
+                'timeout' => 60,
+                'headers' => ['Content-Type' => 'application/x-www-form-urlencoded;charset=utf-8'],
+            ]
+        );
+        $ff= "";
+        for ($i=0;$i<66;$i++){
+                $ff .= "FF";
+        }
+        $parmas = "msg=B1${hotelId}${roomId}FFFF00A701AFFFFFFFFFFEBEEA48${ff}{$status}AAAA0D0A";
+        $aParams = ["hotelnum"=>$hotelId,"data"=>$parmas];
+        $sHttpRes = $httpClient->post("https://www.miulink.com/smarthotel/Control", ['body' => http_build_query($aParams)])->getBody()->getContents();
+        return $sHttpRes;
+    }
+
     public function getMode($roomId,$hotelId)
     {
         //模式
@@ -198,6 +216,9 @@ class RcuMiuLink implements Rcu
 
     public function updateMode($roomId,$hotelId,$mode,$status="STATE_ON")
     {
+        //mode1无卡取电开启,mode0无卡取电关闭
+        $mode = $mode==1 ? 1:0;
+        self::insertCard($roomId,$hotelId,$mode);
         $deviceId = $mode ==1 ? "所有灯":"关闭所有灯";
         self::setMode($roomId,$hotelId,$deviceId,$status);
     }
